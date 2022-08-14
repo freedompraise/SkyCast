@@ -15,7 +15,6 @@ def base(request):
         'icon':city_weather['weather'][0]['icon'],
         'max':int(city_weather['main']['temp']) + 4,
         'min':int(city_weather['main']['temp']) - 4,
-        'name':api_url,
     }
     return render(request,'src/home-view.html',context)
 

@@ -10,17 +10,18 @@
         <div class="col-md-8 col-lg-6 col-xl-4">
   
           <h3 class="mb-4 pb-2 fw-normal">Check the weather forecast</h3>
-  
+            <form method="POST" action="">
+                {% csrf_token %}
           <div class="input-group rounded mb-3">
-            <input type="search" class="form-control rounded" placeholder="City" aria-label="Search"
+            <input type="search" class="form-control rounded" placeholder="City" name="city" aria-label="Search"
               aria-describedby="search-addon" />
-            <a href="#!" type="button">
+            <button type="submit">
               <span class="input-group-text border-0 fw-bold" id="search-addon">
                 Search!
               </span>
-            </a>
+            </button>
           </div>
-  
+            </form>
           <div class="mb-4 pb-2">
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
@@ -38,13 +39,12 @@
           <div class="card shadow-0 border">
             <div class="card-body p-4">
   
-              <h4 class="mb-1 sfw-normal">New York, US</h4>
-              <p class="mb-2">Current temperature: <strong>5.42°C</strong></p>
-              <p>Feels like: <strong>4.37°C</strong></p>
-              <p>Max: <strong>6.11°C</strong>, Min: <strong>3.89°C</strong></p>
+              <h4 class="mb-1 sfw-normal">{{city}}</h4>
+              <p class="mb-2">Current temperature: <strong>{{temperature}}°F</strong></p>
+              <p>Max: <strong>{{max}}°F</strong>, Min: <strong>{{min}}°F</strong></p>
   
               <div class="d-flex flex-row align-items-center">
-                <p class="mb-0 me-4">Scattered Clouds</p>
+                <strong class="mb-0 me-4">{{description}}</strong>
                 <i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
               </div>
   

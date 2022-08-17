@@ -8,9 +8,8 @@ from django.contrib import messages
 def base(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     city = request.POST.get('city')
-    api_url = 'https://api.api-ninjas.com/v1/city?name={}'.format(city)
     city_weather = requests.get(url.format(city)).json()
-    if city_weather:
+    if city_weather['cod'] != '404':  # conditional when the city queried was found
         City.objects.create(
             name = city,
             temperature= int(city_weather['main']['temp'])
@@ -24,11 +23,11 @@ def base(request):
         'icon':city_weather['weather'][0]['icon'],
         'max':int(city_weather['main']['temp']) + 4,
         'min':int(city_weather['main']['temp']) - 4,
+        'city_data':city_weather,
     }
+        return render(request,'src/home-view.html',context)
     else:
-        return messages.error(request,'City not found')
-   
-    return render(request,'src/home-view.html',context)
+        return render(request,'src/404.html')
 
 def loginPage(request):
     return render(request,'src/login.html')

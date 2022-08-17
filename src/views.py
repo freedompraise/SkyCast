@@ -10,10 +10,14 @@ def base(request):
     city = request.POST.get('city')
     city_weather = requests.get(url.format(city)).json()
     if city_weather['cod'] != '404':  # conditional when the city queried was found
-        City.objects.create(
-            name = city,
-            temperature= int(city_weather['main']['temp'])
-        )
+        
+        if city is not None:
+            City.objects.create(
+                name = city,
+                temperature= (city_weather['main']['temp']),
+                max = city_weather['main']['temp_max'],
+                min = city_weather['main']['temp_min'],
+         )
         
         context = {
         'city':city,

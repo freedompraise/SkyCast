@@ -3,10 +3,12 @@ from django.db import models
 # Create your models here.
 
 class City(models.Model):
-    name = models.CharField(max_length=225,null=True, default="freedom land")
+    name = models.CharField(max_length=225)
     time = models.DateTimeField(auto_now_add=True)
-    temperature = models.IntegerField(null=True)
-    # weather_info = models.CharField(max_length=225)
+    temp = models.DecimalField(max_digits=5, decimal_places=2)
+    max =  models.DecimalField(max_digits=5, decimal_places=2)
+    min =  models.DecimalField(max_digits=5, decimal_places=2)
+      # weather_info = models.CharField(max_length=225)
 
     class Meta:
         verbose_name_plural = "cities"

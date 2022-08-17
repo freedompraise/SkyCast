@@ -20,8 +20,9 @@
               </span>
             </button>
           </div>
+          {% if city %}
             </form>
-          <div class="mb-4 pb-2">
+          <div class="mb-4 pb-2" style="margin-top:30px;" >
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
                 value="option1" checked />
@@ -49,9 +50,9 @@
   
             </div>
           </div>
-            
+              {% endif %}
           <div class="card shadow-0 border">
-            <h2 style="margin:30px" >Cities Queried</h2>
+            <h3 style="margin:30px" >Cities Queried</h3>
           {% if cities %}
           {% for city in cities %} 
           
@@ -72,7 +73,7 @@
           
             <div class="card-body p-4">
   
-              <h4 class="mb-1 sfw-normal">You have no cities queried</h4>  
+              <h5 class="mb-1 sfw-normal">You have not queried any city yet</h5>  
             </div>
           {% endif %}
         </div>

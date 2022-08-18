@@ -1,0 +1,24 @@
+{% if cities %}
+{% for city in cities %} 
+<div class="card shadow-0 border">
+  <div class="card-body p-4">
+
+    <h4 class="mb-1 sfw-normal">
+      <a href="https://en.wikipedia.org/wiki/{{city}}">
+       {{ city }}
+      </a> 
+     </h4>
+    <p class="mb-2">Temperature: <strong>{{city.temp}}°F</strong></p>
+    <p class="mb-2">Queried At: <strong> {{city.time}}</strong></p>
+
+
+  </div>
+</div>
+{% endfor %}
+{% else %} 
+
+  <div class="card-body p-4">
+
+    <h5 class="mb-1 sfw-normal">You have not queried any city yet</h5>  
+  </div>
+{% endif %}

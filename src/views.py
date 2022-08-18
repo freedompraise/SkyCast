@@ -12,9 +12,9 @@ def base(request):
     if city_weather['cod'] != '404':  # conditional when the city queried was found
         
         if city is not None:
-            City.objects.create(
+            City.objects.update_or_create(
                 name = city,
-                temperature= (city_weather['main']['temp']),
+                temp= (city_weather['main']['temp']),
                 max = city_weather['main']['temp_max'],
                 min = city_weather['main']['temp_min'],
          )

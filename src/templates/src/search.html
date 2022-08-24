@@ -1,0 +1,33 @@
+<div class="card1 col-lg-8 col-md-7">
+<h3>Check The Weather Forecast</h3>
+<div class="text-center">
+    <img class="image mt-5" src="https://i.imgur.com/M8VyA2h.png" alt = ''>
+</div>
+<div class="row px-3 mt-3 mb-3">
+    <h1 class="large-font mr-3">Lagos 26&#176;c</h1>
+    <div class="d-flex flex-column mr-3">
+
+      <h4 class="mb-1 sfw-normal">
+        <a href="https://en.wikipedia.org/wiki/{{city}}">
+         {{ city.name }}
+        </a> 
+       </h4>
+
+        <small>{{now}}</small>
+    </div>
+    <div class="d-flex flex-column text-center">
+        <h3 class="fa fa-sun-o mt-4"></h3>
+        <small>{{description}}</small>
+    </div>
+</div>
+</div>
+
+
+<div class="card2 col-lg-4 col-md-5">
+<form method="POST" action="{% url 'search' %}" >
+{% csrf_token %}
+<div class="row px-3">
+    <input type="text" name="city" placeholder="Enter another location" class="mb-5" required >
+    <div class="fa fa-search mb-5 mr-0 text-center"></div>
+</div>
+</form>

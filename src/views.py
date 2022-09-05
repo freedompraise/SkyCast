@@ -4,13 +4,16 @@ import requests
 from .models import City
 from django.contrib import messages 
 from datetime import datetime, date
+from django.conf import settings
+from django.core.mail import send_mail
 
 # Create your views here.
 
-def search(request):
-    if request.method == 'POST':
-        return redirect('home')
-    return render(request, 'src/search.html')
+def allCities(request):
+    context={
+        'cities':City.objects.all()
+    }
+    return render(request, 'src/results.html',context)
 
 
 
@@ -34,17 +37,23 @@ def base(request):
             max = 5/9*(city_weather['main']['temp_max']-32),
             min = 5/9*(city_weather['main']['temp_min']-32),
          )
-    else:
-        return redirect('search')
     
 
     context = {
-        'city':City.objects.get(name=city.lower() if city is not None else ''),
-        'cities':City.objects.all()[:4],
+        'city':City.objects.get(name=city.lower() if city is not None else ''), 
+        'cities':City.objects.order_by('-time')[:4], # gets the latest three citiess
         'description':city_weather['weather'][0]['description'],
-        'feels_like': city_weather['main']['feels_like'],
+        'humidity': city_weather['main']['humidity'],
+        'feels_like': str(5/9*(city_weather['main']['feels_like']-32))[:4],
         'now':datetime.now().strftime("%c")
     }
+
+    # send_mail(
+    #     'Email Test',
+    #     "This mail was sent to test django.core mail services",
+    #     settings.EMAIL_HOST_USER,
+    #     ['dikepraise119@gmail.com']
+    # )
     return render(request,'src/home-view.html',context)
    
 

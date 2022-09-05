@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'src',
+    'gmailapi_backend'
     ]
 
 MIDDLEWARE = [
@@ -99,6 +100,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# EMAIL SERVICES
+EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
+GMAIL_API_CLIENT_ID = 'client_id'
+GMAIL_API_CLIENT_SECRET = 'client_secret'
+GMAIL_API_REFRESH_TOKEN = 'refresh_token'
 
 
 # Internationalization

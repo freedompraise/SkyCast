@@ -100,6 +100,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SESSION_COOKIE_AGE = 1800 # user session time of 30 mins
+
+
 
 # EMAIL SERVICES
 MAILCHIMP_API_KEY = "54cce612a4838a2b4a2dff0d78faf9a8-us18"

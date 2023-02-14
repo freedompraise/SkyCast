@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages 
 from django.conf import settings
-from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth import authenticate, logout 
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 from .models import City
@@ -25,7 +27,7 @@ def allCities(request):
     return render(request, 'src/results.html',context)
 
 
-
+@login_required(login_url='login')
 def base(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     #if request.method == 'POST':
@@ -105,7 +107,7 @@ def loginPage(request):
     password = request.POST.get('password')
     user = authenticate(request, email = email, password = password)
     if user is not None:
-        login(request,user)
+        auth_login(request,user)
         subscribe(email)
         return redirect(home)
     else:

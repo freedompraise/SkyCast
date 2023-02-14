@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm
 
 
 from .models import City
@@ -95,24 +96,27 @@ def subscribe(email):
 
 
 def registerPage(request):
-    email = request.POST.get('email')
-    password = request.POST.get('password')
-    user = authenticate(request, email = email, password = password)
-    if user is None:
-        User.objects.create(email=email, password=password)
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request,'src/register.html', {'form':form})
 
 
 def loginPage(request):
-    email = request.POST.get('email')
-    password = request.POST.get('password')
-    user = authenticate(request, email = email, password = password)
-    if user is not None:
-        auth_login(request,user)
-        subscribe(email)
-        return redirect(home)
-    else:
-        messages.error((request), "You failed the test!")
-
-    return render(request,'src/login.html')
+    error_message = None
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('home')
+        else:
+            error_message = 'Invalid username or password.'
+    return render(request, 'src/login.html', {'error_message': error_message})
 
  

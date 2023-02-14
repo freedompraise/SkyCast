@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>State your Geo</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}">
+  </head>
+
+  <h1>Sign up for GeoStation</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <h4>Sign up for a GeoStation account to receive weekly weather reports and save your frequently searched cities for easy access.</h4>
+
+    <button type="submit">Sign up</button>
+  </form>

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'src',
-    'gmailapi_backend'
     ]
 
 MIDDLEWARE = [
@@ -103,10 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # EMAIL SERVICES
-EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
-GMAIL_API_CLIENT_ID = 'client_id'
-GMAIL_API_CLIENT_SECRET = 'client_secret'
-GMAIL_API_REFRESH_TOKEN = 'refresh_token'
+MAILCHIMP_API_KEY = "54cce612a4838a2b4a2dff0d78faf9a8-us18"
+MAILCHIMP_DATA_CENTER = "s18"
+MAILCHIMP_EMAIL_LIST_ID = "4003afd506"
 
 
 # Internationalization

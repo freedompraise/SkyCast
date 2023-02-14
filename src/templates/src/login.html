@@ -7,26 +7,20 @@
                       <div class="col-lg-8">
                           <div class="form-area login-form">
                               <div class="form-content">
-                                  <h2>Login</h2>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nonea non aperiam cum quas quod reprehenderit.</p>
-                                  <ul>
-                                      <li><a href="#" class="facebook"><i class="fa fa-facebook-f"></i><span>facebook</span></a></li>
-                                      <li><a href="#" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a></li>
-                                  </ul>
-                              </div>
                               <div class="form-input">
                                   <h2>Login Form</h2>
-                                  <form>
+                                  <form method="POST" action="">
+                                    {% csrf_token %}
                                       <div class="form-group">
-                                          <input type="text"  id="" name="name" required>
-                                          <label>User Name</label>
+                                          <input type="text"  id="" name="email" required>
+                                          <label>Email</label>
                                       </div>
                                       <div class="form-group">
                                           <input type="password" id="" name="password" required>
-                                          <label>password</label>
+                                          <label>Password</label>
                                           </div>
                                           <div class="myform-button">
-                                              <button class="myform-btn">Login</button>
+                                              <button class="myform-btn" type="submit" >Login</button>
                                           </div>
                                       </form>
                                   </div>

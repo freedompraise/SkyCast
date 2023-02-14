@@ -1,11 +1,20 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
-import requests
-from .models import City
 from django.contrib import messages 
-from datetime import datetime, date
 from django.conf import settings
-from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.models import User
+
+
+from .models import City
+
+import requests
+from datetime import datetime, date
+from mailchimp_marketing import Client
+from mailchimp_marketing.api_client import ApiClientError
+
+api_key = settings.MAILCHIMP_API_KEY
+server = settings.MAILCHIMP_DATA_CENTER
+list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 
 # Create your views here.
 
@@ -48,17 +57,60 @@ def base(request):
         'now':datetime.now().strftime("%c")
     }
 
-    # send_mail(
-    #     'Email Test',
-    #     "This mail was sent to test django.core mail services",
-    #     settings.EMAIL_HOST_USER,
-    #     ['dikepraise119@gmail.com']
-    # )
+   
     return render(request,'src/home-view.html',context)
    
 
-def loginPage(request):
-    return render(request,'src/login.html')
 
 def pageNotFound(request):
     return render(request,'src/404.html') 
+
+
+# Subscription Logic
+def subscribe(email):
+    """
+     Contains code handling the communication to the mailchimp api
+     to create a contact/member in an audience/list.
+    """
+
+    mailchimp = Client()
+    mailchimp.set_config({
+        "api_key": api_key,
+        "server": server,
+    })
+
+    member_info = {
+        "email_address": email,
+        "status": "subscribed",
+    }
+
+    try:
+        response = mailchimp.lists.add_list_member(list_id, member_info)
+        print("response: {}".format(response))
+    except ApiClientError as error:
+        print("An exception occured: {}".format(error.text))
+
+
+
+def registerPage(request):
+    email = request.POST.get('email')
+    password = request.POST.get('password')
+    user = authenticate(request, email = email, password = password)
+    if user is None:
+        User.objects.create(email=email, password=password)
+
+
+def loginPage(request):
+    email = request.POST.get('email')
+    password = request.POST.get('password')
+    user = authenticate(request, email = email, password = password)
+    if user is not None:
+        login(request,user)
+        subscribe(email)
+        return redirect(home)
+    else:
+        messages.error((request), "You failed the test!")
+
+    return render(request,'src/login.html')
+
+ 

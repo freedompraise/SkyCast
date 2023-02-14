@@ -1,33 +1,28 @@
-
+{% load static %}
 
  <head>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}" />
  </head>
 
-{% if cities %}
-  <h5 class = "text-center display-4"  >All cities queried</h5>
-
-<div class="card shadow-0 border">
-  {% for city in cities %} 
-  <div class="card-body p-4">
-    <h4 class="mb-1 sfw-normal">
-      <a href="https://en.wikipedia.org/wiki/{{city}}">
-       {{ city }}
-      </a> 
-     </h4>
-    <p class="mb-2">Temperature: <strong>{{city.temp}}°F</strong></p>
-    <p class="mb-2">Queried At: <strong> {{city.time}}</strong></p>
+<!-- results.html -->
 
 
-  </div>
-{% endfor %}
-<button class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true"  onclick = history.back() >Back to search</button>
-</div>
-{% else %} 
+  <h1>Cities Queried</h1>
 
-  <div class="card-body p-4">
+  {% if cities %}
+    <ul>
+      {% for city in cities %}
+        <li>
+          <strong><a href = "https://en.wikipedia.org/wiki/{{city}}">{{ city.name }}</a>
+          </strong>
+          <p>Temperature: {{ city.temperature }}°C</p>
+          <p>Time Queried: {{ city.time_queried }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No cities have been queried yet.</p>
+  {% endif %}
 
-    <h5 class="mb-1 sfw-normal">You have not queried any city yet</h5>  
-  </div>
-{% endif %}
+  <button type="button" onclick="location.href='/'">Back to Home</button>
+

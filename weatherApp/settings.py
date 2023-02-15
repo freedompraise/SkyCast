@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-!
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -106,6 +106,7 @@ SESSION_COOKIE_AGE = 1800 # user session time of 30 mins
 MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = config('MAILCHIMP_DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = config('MAILCHIMP_EMAIL_LIST_ID')
+SECRET_KEY = config('SECRET_KEY')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

@@ -69,37 +69,32 @@ def pageNotFound(request):
     return render(request,'src/404.html') 
 
 
-##  Subscription Logic
-def subscribe(email):
-    """
-     Contains code handling the communication to the mailchimp api
-     to create a contact/member in an audience/list.
-    """
-
-    mailchimp = Client()
-    mailchimp.set_config({
-        "api_key": api_key,
-        "server": server,
-    })
-
-    member_info = {
-        "email_address": email,
-        "status": "subscribed",
-    }
-
-    try:
-        response = mailchimp.lists.add_list_member(list_id, member_info)
-        print("response: {}".format(response))
-    except ApiClientError as error:
-        print("An exception occured: {}".format(error.text))
-
-
-
 def registerPage(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+             # Subscribe the user to the Mailchimp list
+            try:
+                client = Client()
+                client.set_config({
+                    "api_key": settings.MAILCHIMP_API_KEY,
+                    "server": "us1"
+                })
+                client.lists.add_list_member(
+                    settings.MAILCHIMP_LIST_ID,
+                    {
+                        'email_address': user.email,
+                        'status': 'subscribed',
+                        'merge_fields': {
+                            'FNAME': user.first_name,
+                            'LNAME': user.last_name
+                        }
+                    }
+                )
+            except ApiClientError as error:
+                # Handle the error
+                pass
             return redirect('home')
     else:
         form = CustomUserCreationForm()

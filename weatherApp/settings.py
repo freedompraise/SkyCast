@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,8 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-wkib006cq$_jgsg(9q+bljf@7$uhyhpq12ctpx8*+9rc*d0gh-'
+!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -103,12 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
 SESSION_COOKIE_AGE = 1800 # user session time of 30 mins
 
 
-
-# EMAIL SERVICES
-MAILCHIMP_API_KEY = "54cce612a4838a2b4a2dff0d78faf9a8-us18"
-MAILCHIMP_DATA_CENTER = "s18"
-MAILCHIMP_EMAIL_LIST_ID = "4003afd506"
-
+MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
+MAILCHIMP_DATA_CENTER = config('MAILCHIMP_DATA_CENTER')
+MAILCHIMP_EMAIL_LIST_ID = config('MAILCHIMP_EMAIL_LIST_ID')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

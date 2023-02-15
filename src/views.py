@@ -89,6 +89,7 @@ def registerPage(request):
                         'status': 'subscribed',
                         'merge_fields': {
                             'FNAME': user.username,
+                            'LNAME': user.email
                         }
                     }
                 )

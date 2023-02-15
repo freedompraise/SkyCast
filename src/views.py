@@ -74,6 +74,7 @@ def registerPage(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            auth_login(request,user)
              # Subscribe the user to the Mailchimp list
             try:
                 client = Client()
@@ -82,13 +83,12 @@ def registerPage(request):
                     "server": "us1"
                 })
                 client.lists.add_list_member(
-                    settings.MAILCHIMP_LIST_ID,
+                    settings.MAILCHIMP_EMAIL_LIST_ID,
                     {
                         'email_address': user.email,
                         'status': 'subscribed',
                         'merge_fields': {
-                            'FNAME': user.first_name,
-                            'LNAME': user.last_name
+                            'FNAME': user.username,
                         }
                     }
                 )

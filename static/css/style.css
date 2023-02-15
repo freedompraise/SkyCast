@@ -2,7 +2,7 @@ body {
     color: #fff;
     overflow-x: hidden;
     height: 100%;
-    background-image: linear-gradient(#81D4FA, #2196F3);
+    background-image: linear-gradient(#5090ad, #9dc9ee);
     background-repeat: no-repeat;
 }
 
@@ -30,7 +30,7 @@ body {
 }
 
 .card2 {
-    background-color: #607D8B;
+    background-color: #24749c;
     padding: 0px 0px 40px 40px;
 }
 
@@ -68,8 +68,8 @@ input:focus {
 }
 
 .fa-search {
-    color: #607D8B;
-    background-color: #E1F5FE;
+    color: #2a6886;
+    background-color: #24749c
     font-size: 20px;
     padding: 20px;
     width: 20%;
@@ -87,7 +87,7 @@ input:focus {
 
 .line {
     height: 1px;
-    background-color: #B0BEC5;
+    background-color: #128bc7;
 }
 
 @media screen and (max-width: 500px) {

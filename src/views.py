@@ -71,31 +71,41 @@ def pageNotFound(request):
 
 def registerPage(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            auth_login(request,user)
-             # Subscribe the user to the Mailchimp list
+            form.save()
+            auth_login(request, user)
+            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
             try:
-                client = Client()
+                # Initialize the Mailchimp SDK
+                client = MailchimpMarketing.Client()
                 client.set_config({
-                    "api_key": settings.MAILCHIMP_API_KEY,
-                    "server": "us1"
+                    "api_key": "YOUR_API_KEY",
+                    "server": "YOUR_SERVER"
                 })
-                client.lists.add_list_member(
-                    settings.MAILCHIMP_EMAIL_LIST_ID,
-                    {
-                        'email_address': user.email,
-                        'status': 'subscribed',
-                        'merge_fields': {
-                            'FNAME': user.username,
-                            'LNAME': user.email
-                        }
+
+                # Add the user to the Mailchimp contact list
+                response = client.lists.add_list_member("YOUR_LIST_ID", {
+                    "email_address": email,
+                    "status": "subscribed",
+                    "merge_fields": {
+                        "FNAME": first_name,
+                        "LNAME": last_name,
+                        "USERNAME": username
                     }
-                )
-            except ApiClientError as error:
-                # Handle the error
-                pass
+                })
+                # Log the response
+                print(response)
+                
+            except MailchimpMarketing.ApiException as e:
+                # Handle any API errors
+                print("Error: {}".format(e))
+            except Exception as e:
+                # Handle any other errors
+                print("Error: {}".format(e))
             return redirect('home')
     else:
         form = CustomUserCreationForm()

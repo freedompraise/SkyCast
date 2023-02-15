@@ -69,7 +69,7 @@ def pageNotFound(request):
     return render(request,'src/404.html') 
 
 
-# Subscription Logic
+##  Subscription Logic
 def subscribe(email):
     """
      Contains code handling the communication to the mailchimp api

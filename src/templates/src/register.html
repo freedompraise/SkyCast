@@ -1,18 +1,37 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>State your Geo</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}">
-  </head>
+<head>
+	<title>Login | GeoStation</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-9XZlBtV0zgI0W8VvTfNinN7VYRXQEHiCOp8rjKX9Rd7VrTOcNVYYbh8i0QK1C3FsYfWo3MlCgsrKjJGuUSLo1g==" crossorigin="anonymous" />
+</head>
+<body>
+  <div class="login-box">
+      <h1>Sign up to GeoStation</h1>
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="username" name="username" id="login-input">
+        <input type="email" placeholder="email" name="email" id="login-input">
+        <input type="text" placeholder="first name" name="first_name" id="login-input">
+        <input type="text" placeholder="last name" name="last_name" id="login-input">
+      <input type="password" placeholder="password" name="password" id="login-input">
+      <input type="password" placeholder="repeat password" name="password1" id="login-input">
 
-  <h1>Sign up for GeoStation</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <h4>Sign up for a GeoStation account to receive weekly weather reports and save your frequently searched cities for easy access.</h4>
-
-    <button type="submit">Sign up</button>
-  </form>
+      <div class="register-text">
+        <h4>Sign up to get free weekly weather reports.</h4>
+      </div>        
+        <button type="submit" id="login-button">Signup</button>
+      </form>
+      <div class="theme-toggle">
+        <h2></h2>
+        <label class="switch">
+          <input type="checkbox" onclick="switchTheme()">
+          <span class="slider"></span>
+        </label>
+      </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/darkmode.js' %}"></script>
+</body>
+</html>

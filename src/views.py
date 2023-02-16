@@ -29,7 +29,7 @@ def allCities(request):
     return render(request, 'src/results.html',context)
 
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def base(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     #if request.method == 'POST':

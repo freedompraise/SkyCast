@@ -9,5 +9,5 @@ class CustomUserCreationForm(UserCreationForm):
     last_name = forms.CharField(max_length=30, required=True, help_text="Required. Enter your last name.")
     
     class Meta:
-        model = CustomUser
+        model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2')

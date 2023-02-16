@@ -75,7 +75,7 @@ def registerPage(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            auth_login(request, user)
+        
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             first_name = form.cleaned_data.get('first_name')
@@ -100,14 +100,16 @@ def registerPage(request):
                 })
                 # Log the response
                 print(response)
-                
-            except MailchimpMarketing.ApiException as e:
+
+                 # If the subscriber was added successfully, log the user in and redirect to the home page
+                user = authenticate(username=form.cleaned_data.get('username'), password=form.cleaned_data.get('password1'))
+                auth_login(request, user)
+                return redirect('home')
+
+            except Exception as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
-            except Exception as e:
-                # Handle any other errors
-                print("Error: {}".format(e))
-            return redirect('home')
+                user.delete()
     else:
         form = CustomUserCreationForm()
     return render(request,'src/register.html', {'form':form})

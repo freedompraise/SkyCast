@@ -6,6 +6,8 @@
     <title>GeoStation Login</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
     <link rel="stylesheet" href="{% static 'css/dark-mode.css' %}" class="dark-mode">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-VP6KKO1LWyx/XOo3q3U5h5U5w6uBGx6jK7VXkh1ZBd7gBzPQXM/jyyj5u6eMkV
+
   </head>
   <body>
     <div class="container">
@@ -22,15 +24,14 @@
         <input type="submit" value="Login">
       </form>
       <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
-      <button id="dark-mode-toggle" class="btn btn-secondary" onclick="toggleDarkMode()">
-        <i id="dark-mode-icon" class="fas fa-sun"></i>
-        <span id="dark-mode-label">Toggle Dark Mode</span>
+      <button id="dark-mode-toggle" class="btn btn-outline-light" type = "button" onclick="toggleDarkMode()">
+        <i id="dark-mode-icon" class="fa fa-sun"></i>
+        <span id="dark-mode-label"></span>
       </button>
       
     </div>
     <script>
-      const darkModeToggle = document.querySelector('#dark-mode-toggle');
-      const body = document.body;
+     
 
       function toggleDarkMode() {
         var body = document.querySelector("body");
@@ -42,12 +43,12 @@
           body.classList.remove("dark-mode");
           icon.classList.remove("fa-moon");
           icon.classList.add("fa-sun");
-          label.textContent = "Toggle Dark Mode";
+          label.textContent = "Dark Mode";
         } else {
           body.classList.add("dark-mode");
           icon.classList.remove("fa-sun");
           icon.classList.add("fa-moon");
-          label.textContent = "Toggle Light Mode";
+          label.textContent = "Light Mode";
         }
       }
       

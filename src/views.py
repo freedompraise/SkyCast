@@ -14,7 +14,7 @@ import requests
 from datetime import datetime, date
 
 import mailchimp_marketing as MailchimpMarketing
-from mailchimp_marketing.errors import ApiEception
+
 
 api_key = settings.MAILCHIMP_API_KEY
 server = settings.MAILCHIMP_DATA_CENTER
@@ -101,7 +101,7 @@ def registerPage(request):
                 # Log the response
                 print(response)
                 
-            except ApiException as e:
+            except MailchimpMarketing.ApiException as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
             except Exception as e:

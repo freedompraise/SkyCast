@@ -12,8 +12,9 @@ from .models import City
 
 import requests
 from datetime import datetime, date
-from mailchimp_marketing import Client
-from mailchimp_marketing.api_client import ApiClientError
+
+import mailchimp_marketing as MailchimpMarketing
+from mailchimp_marketing.errors import ApiEception
 
 api_key = settings.MAILCHIMP_API_KEY
 server = settings.MAILCHIMP_DATA_CENTER
@@ -71,9 +72,9 @@ def pageNotFound(request):
 
 def registerPage(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             auth_login(request, user)
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
@@ -83,12 +84,12 @@ def registerPage(request):
                 # Initialize the Mailchimp SDK
                 client = MailchimpMarketing.Client()
                 client.set_config({
-                    "api_key": "YOUR_API_KEY",
-                    "server": "YOUR_SERVER"
+                    "api_key": api_key,
+                    "server": server
                 })
 
                 # Add the user to the Mailchimp contact list
-                response = client.lists.add_list_member("YOUR_LIST_ID", {
+                response = client.lists.add_list_member(list_id, {
                     "email_address": email,
                     "status": "subscribed",
                     "merge_fields": {
@@ -100,7 +101,7 @@ def registerPage(request):
                 # Log the response
                 print(response)
                 
-            except MailchimpMarketing.ApiException as e:
+            except ApiException as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
             except Exception as e:

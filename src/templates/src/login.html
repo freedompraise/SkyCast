@@ -7,32 +7,22 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-9XZlBtV0zgI0W8VvTfNinN7VYRXQEHiCOp8rjKX9Rd7VrTOcNVYYbh8i0QK1C3FsYfWo3MlCgsrKjJGuUSLo1g==" crossorigin="anonymous" />
 </head>
 <body>
-	<div class="login-container">
-		<div class="card">
-			<h2>Login</h2>
-			<form method="POST">
-				{% csrf_token %}
-				<label for="username"><b>Username</b></label>
-				<input type="text" placeholder="Enter Username" name="username" required>
+  <div class="login-box">
+    <h1>Login</h1>
+    <form>
+      <input type="text" placeholder="Username" id="login-input">
+      <input type="password" placeholder="Password" id="login-input">
+      <button type="submit" id="login-button">Login</button>
+    </form>
+  </div>
 
-				<label for="password"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="password" required>
-
-				<button type="submit">Login</button>
-
-				<div class="toggle-container">
-					<span><i class="fas fa-sun"></i></span>
-					<input type="checkbox" id="toggle" name="toggle" class="toggle">
-					<span><i class="fas fa-moon"></i></span>
-				</div>
-
-				<div class="error-message">
-					{% if error_message %}
-						{{ error_message }}
-					{% endif %}
-				</div>
-			</form>
-		</div>
+  <div class="theme-toggle">
+    <h2></h2>
+    <label class="switch">
+      <input type="checkbox" onclick="switchTheme()">
+      <span class="slider"></span>
+    </label>
+  </div>
 	</div>
 	<script type="text/javascript" src="{% static 'js/darkmode.js' %}"></script>
 </body>

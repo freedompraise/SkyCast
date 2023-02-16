@@ -1,18 +1,17 @@
-function toggleDarkMode() {
-    var body = document.querySelector("body");
-    var button = document.querySelector("#dark-mode-toggle");
-    var icon = document.querySelector("#dark-mode-icon");
-    var label = document.querySelector("#dark-mode-label");
-    
-    if (body.classList.contains("dark-mode")) {
-      body.classList.remove("dark-mode");
-      icon.classList.remove("fa-moon");
-      icon.classList.add("fa-sun");
-      label.textContent = "Dark Mode";
-    } else {
-      body.classList.add("dark-mode");
-      icon.classList.remove("fa-sun");
-      icon.classList.add("fa-moon");
-      label.textContent = "Light Mode";
-    }
-  }
+const body = document.body;
+const loginBox = document.querySelector(".login-box");
+const h1 = document.getElementsByTagName("h1")[0];
+const inputs = document.querySelectorAll("input");
+const loginButton = document.getElementById("login-button");
+const h2 = document.getElementsByTagName("h2")[0];
+
+function switchTheme() {
+  loginBox.classList.toggle("dark-mode");
+  body.classList.toggle("dark-mode");
+  h1.classList.toggle("dark-mode");
+  inputs.forEach(input => {
+    input.classList.toggle("dark-mode");
+  });
+  loginButton.classList.toggle("dark-mode");
+  h2.classList.toggle("dark-mode");
+}

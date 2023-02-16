@@ -1,82 +1,58 @@
-/* Base styles */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  color: #fff;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #272727;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #3c3c3c;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-form h2 {
-  margin-bottom: 20px;
-}
-
-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #1c1c1c;
-  border: none;
-  color: #fff;
-  border-radius: 5px;
-}
-
-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #009688;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #008073;
-}
-
-/* Dark mode */
-body.dark {
-  background-color: #121212;
-  color: #fff;
-}
-
-.container.dark {
-  background-color: #121212;
-}
-
-form.dark {
-  background-color: #272727;
-}
-
-form input.dark {
-  background-color: #1c1c1c;
-  color: #fff;
-}
-
-form button.dark {
-  background-color: #009688;
-  color: #fff;
-}
-
-form button.dark:hover {
-  background-color: #008073;
-}
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    color: #444;
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin: 0;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  input[type="submit"] {
+    background-color: #00bfff;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  a {
+    color: #00bfff;
+  }
+  

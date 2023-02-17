@@ -1,10 +1,13 @@
-# Geostation
-<h4> Day 33, <a href="https://codechalleng.es/challenges/33/"> Py excercises and blog code</a>
-</h4>
+# SkyCast
 
-<h5>Don't be shy</h5>
-Convert PyBites' Weather Compare App (article) into a Django app and enhance it with the following features:
+This is a Django web application that allows users to compare weather information for different cities, view historic weather data, and sign up for daily weather alerts.
 
-Keep a log of cities queried.
-Have a user signup asking for the geo and show (and email) the daily weather.
-Show historic weather info
+## Features
+- Compare current weather data for multiple cities
+- View historic weather data for each city
+- Sign up to receive daily weather updates by email
+- Save a log of previously queried cities
+- Data sourced from OpenWeatherMap API
+- Dark Mode Options
+
+## Installation

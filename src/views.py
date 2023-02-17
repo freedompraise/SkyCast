@@ -60,7 +60,8 @@ def base(request):
         'description':city_weather['weather'][0]['description'],
         'humidity': city_weather['main']['humidity'],
         'feels_like': str(5/9*(city_weather['main']['feels_like']-32))[:4],
-        'now':datetime.now().strftime("%c")
+        'now':datetime.now().strftime("%c"),
+        'user':request.user
     }
 
    

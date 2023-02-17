@@ -116,13 +116,14 @@ def registerPage(request):
             print(response)
 
                  # If the subscriber was added successfully, log the user in and redirect to the home page
-            auth_login(request, user)
-            return redirect('home')
+            if user is not None:
+                auth_login(request, user)
+                return redirect('home')
 
         except Exception as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
-                user.delete()
+                User.objects.get(username=request.user.username).delete()
     else:
         form = CustomUserCreationForm()
     return render(request,'src/register.html', {'form':form})

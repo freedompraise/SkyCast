@@ -45,7 +45,8 @@ def base(request):
        
     if city is not None:
          if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
-            City.objects.get_or_create(   
+            City.objects.get_or_create(  
+            user = request.user,    
             name = city.lower(),
             temp= 5/9* (city_weather['main']['temp']-32),
             max = 5/9*(city_weather['main']['temp_max']-32),

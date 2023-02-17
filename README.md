@@ -1,5 +1,7 @@
 # SkyCast
 
+<img src="static/img.png"/>
+
 This is a Django web application that allows users to compare weather information for different cities, view historic weather data, and sign up for daily weather alerts.
 
 ## Features

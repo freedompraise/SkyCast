@@ -29,7 +29,7 @@ source env/bin/activate
 ```sh
 pip install requirements.txt
 ```
-**4. Create a 'config.ini' file in the 'weathercompare' directory with your OpenWeatherMap API key and email credentials: 
+**4. Create a 'config.ini' file in the 'weathercompare' directory with your OpenWeatherMap API key and email credentials:**
 ```sh
 [openweathermap]
 api_key = your_api_key
@@ -41,7 +41,7 @@ username = your_email_username
 password = your_email_password
 ```
 
-**4. Run the Django server:**
+**5. Run the Django server:**
 ```sh
 python manage.py runserver
 ```

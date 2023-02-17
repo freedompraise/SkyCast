@@ -56,5 +56,9 @@ Credits
 # Credits
 This app was created by Praise Freedom Dike for the http://CodeChallenge.es Weather Compare App challenge.
 
+Follow me on [Twitter](https://twitter.com/freedom_praise)
+
+Connect with me on [Linkedin](https://linkedin.com/praise-dike-7a25011b3)
+
 # License
 This project is licensed under the <a href="https://opensource.org/licenses/MIT">MIT LICENSE</a>

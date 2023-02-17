@@ -64,7 +64,6 @@ def base(request):
 
    
     return render(request,'src/home-view.html',context)
-   
 
 
 def pageNotFound(request):

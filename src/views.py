@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+
 from .forms import CustomUserCreationForm
 
 
@@ -29,7 +30,7 @@ def allCities(request):
     return render(request, 'src/results.html',context)
 
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def base(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     #if request.method == 'POST':
@@ -71,42 +72,53 @@ def pageNotFound(request):
 
 
 def registerPage(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-        
-            email = form.cleaned_data.get('email')
-            username = form.cleaned_data.get('username')
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            try:
-                # Initialize the Mailchimp SDK
-                client = MailchimpMarketing.Client()
-                client.set_config({
-                    "api_key": api_key,
-                    "server": server
-                })
+    if request.method == 'POST':        
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        password = request.POST.get('password')
+        password1 = request.POST.get('password1')
+        user = authenticate(username=username, password=password)
 
-                # Add the user to the Mailchimp contact list
-                response = client.lists.add_list_member(list_id, {
-                    "email_address": email,
-                    "status": "subscribed",
-                    "merge_fields": {
-                        "FNAME": first_name,
-                        "LNAME": last_name,
-                        "USERNAME": username
+        if password == password1:
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+            )
+            return redirect('home')
+        else:
+            error_msg = 'Passwords do not match'
+      
+        try:
+            # Initialize the Mailchimp SDK
+            client = MailchimpMarketing.Client()
+            client.set_config({
+                "api_key": api_key,
+                "server": server
+            })
+
+            # Add the user to the Mailchimp contact list
+            response = client.lists.add_list_member(list_id, {
+                "email_address": email,
+                "status": "subscribed",
+                "merge_fields": {
+                "FNAME": first_name,
+                "LNAME": last_name,
+                "USERNAME": username
                     }
                 })
                 # Log the response
-                print(response)
+            print(response)
 
                  # If the subscriber was added successfully, log the user in and redirect to the home page
-                user = authenticate(username=form.cleaned_data.get('username'), password=form.cleaned_data.get('password1'))
-                auth_login(request, user)
-                return redirect('home')
+            auth_login(request, user)
+            return redirect('home')
 
-            except Exception as e:
+        except Exception as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
                 user.delete()

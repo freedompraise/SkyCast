@@ -11,12 +11,12 @@
       <h1>Sign up to GeoStation</h1>
       <form method="post">
         {% csrf_token %}
-        <input type="text" placeholder="username" name="username" id="login-input">
-        <input type="email" placeholder="email" name="email" id="login-input">
-        <input type="text" placeholder="first name" name="first_name" id="login-input">
-        <input type="text" placeholder="last name" name="last_name" id="login-input">
-      <input type="password" placeholder="password" name="password" id="login-input">
-      <input type="password" placeholder="repeat password" name="password1" id="login-input">
+        <input type="text" placeholder="username" name="username" id="login-input" required>
+        <input type="email" placeholder="email" name="email" id="login-input" required>
+        <input type="text" placeholder="first name" name="first_name" id="login-input" required>
+        <input type="text" placeholder="last name" name="last_name" id="login-input" required>
+      <input type="password" placeholder="password" name="password" id="login-input" required>
+      <input type="password" placeholder="repeat password" name="password1" id="login-input" required>
 
       <div class="register-text">
         <h4>Sign up to get free weekly weather reports.</h4>

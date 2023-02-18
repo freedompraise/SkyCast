@@ -1,0 +1,31 @@
+{
+    "name": "skycast",
+    "version": "1.0.0",
+    "description": "A weather app built with Django",
+    "scripts": {
+      "build": "python manage.py collectstatic --noinput",
+      "install": "pip install -r requirements.txt"
+    },
+    "dependencies": {
+      "django": "1.11.29",
+      "gunicorn": "^20.1.0",
+      "psycopg2-binary": "^2.9.3",
+      "whitenoise": "^5.3.0"
+    },
+    "devDependencies": {},
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/fredompraise/skycast.git"
+    },
+    "keywords": [
+      "weather",
+      "django"
+    ],
+    "author": "Praise Dike",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/fredompraise/skycast/issues"
+    },
+    "homepage": "https://github.com/fredompraise/skycast#readme"
+  }
+  

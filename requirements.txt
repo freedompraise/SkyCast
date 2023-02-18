@@ -2,7 +2,7 @@ Django==1.11.29
 django-requests==0.0.2
 django-reset-migrations== 0.3.1
 gunicorn==19.4.4
-mailchimp-marketing==2.0.10
+mailchimp==2.0.10
 python-dateutil==2.6.1
 python-decouple==3.2
 python-dotenv==0.17.0

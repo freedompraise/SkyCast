@@ -1,5 +1,5 @@
 Django==1.11.29
-django-requests==1.5.6
+django-requests==0.0.2
 django-reset-migrations== 0.3.1
 gunicorn==19.4.4
 mailchimp==2.0.10

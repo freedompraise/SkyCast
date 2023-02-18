@@ -54,7 +54,7 @@ python manage.py runserver
 Credits
 
 # Credits
-This app was created by Praise Freedom Dike for the <a href = "http://CodeChallenge.es/challenges/33">Weather Compare App challenge.</a>
+This app was created by Praise Freedom Dike for the <a href = "http://CodeChalleng.es/challenges/33">Weather Compare App challenge.</a>
 
 Follow me on [Twitter](https://twitter.com/freedom_praise)
 

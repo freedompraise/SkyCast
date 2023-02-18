@@ -1,19 +1,10 @@
 Django==1.11.29
 django-requests==0.0.2
 django-reset-migrations== 0.3.1
-djangorestframework==3.13.1
 gunicorn==20.1.0
 mailchimp-marketing==3.0.75
-MarkupSafe==2.1.1
-Pygments==2.11.2
-pyOpenSSL==22.0.0
-pyparsing==3.0.8
-pyperclip==1.8.2
-pypiwin32==223
-PySocks==1.7.1
 python-dateutil==2.8.2
 python-decouple==3.7
 python-dotenv==0.21.1
-urllib3==1.26.9
 virtualenv==20.13.3
 whitenoise==6.0.0

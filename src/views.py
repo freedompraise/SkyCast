@@ -99,7 +99,7 @@ def register(request):
 
                  # If the subscriber was added successfully, log the user in and redirect to the home page
                 if user is not None:
-                    auth_login(request, user)
+                    login(request, user)
                     return redirect('home')
 
             except Exception as e:
@@ -111,7 +111,7 @@ def register(request):
             messages.error(request, 'Invalid form data. Please correct the errors below.')
     else:
         form = CustomUserCreationForm()
-    return render(request,'src/register.html', {'form':form})
+    return render(request,'src/register.html')
 
 
 def loginPage(request):
@@ -120,7 +120,7 @@ def loginPage(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            auth_login(request, user)
+            login(request, user)
             return redirect('home')
         else:
             messages.error(request, 'Invalid username or password.')

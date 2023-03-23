@@ -21,10 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
 ALLOWED_HOSTS = ["*"]
 
 
@@ -108,6 +104,7 @@ MAILCHIMP_DATA_CENTER = config('MAILCHIMP_DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = config('MAILCHIMP_EMAIL_LIST_ID')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

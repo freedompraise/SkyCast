@@ -22,7 +22,11 @@
 
 
                   <div class="card1 col-lg-8 col-md-7">
+                    {% if request.user.is_authenticated %}
                       <h3>Hello, {{user.first_name}}. Welcome to SkyCast</h3>
+                      {% else %}
+                      <h3>Hello, and Welcome to SkyCast</h3>
+                      {% endif %}
                       <div class="text-center">
                           <img class="image mt-5" src="https://i.imgur.com/M8VyA2h.png">
                       </div>
@@ -47,7 +51,7 @@
 
 
                   <div class="card2 col-lg-4 col-md-5">
-                    <form method="POST" action="" >
+                    <form method="POST" action="{% url 'search' %}">
                       {% csrf_token %}
                       <div class="row px-3">
                           <input type="text" name="city" placeholder="Enter location..." class="mb-5">

@@ -1,3 +1,4 @@
+# Django
 from django.shortcuts import render, redirect
 from django.contrib import messages 
 from django.conf import settings
@@ -5,15 +6,13 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+# from src
 from .forms import CustomUserCreationForm
-
-
 from .models import City
-
+# python
 import requests
 from datetime import datetime, date
-
+# mailchimp
 import mailchimp_marketing as MailchimpMarketing
 
 
@@ -30,7 +29,6 @@ def allCities(request):
     return render(request, 'src/results.html',context)
 
 
-@login_required(login_url='login')
 def base(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     #if request.method == 'POST':
@@ -64,9 +62,29 @@ def base(request):
         'user':request.user
     }
 
-   
     return render(request,'src/home-view.html',context)
 
+@login_required(login_url='login')
+def city_search(request):
+    city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
+    city_weather = requests.get(url.format(city)).json()
+    # else:
+    #     return redirect('search')
+    
+    if city_weather['cod'] == '404':  # conditional when the city queried was found
+        return redirect('404')
+        
+       
+    if city is not None:
+         if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
+            City.objects.get_or_create(  
+            user = request.user,    
+            name = city.lower(),
+            temp= 5/9* (city_weather['main']['temp']-32),
+            max = 5/9*(city_weather['main']['temp_max']-32),
+            min = 5/9*(city_weather['main']['temp_min']-32),
+         )
+    return redirect('home')    
 
 def pageNotFound(request):
     return render(request,'src/404.html') 

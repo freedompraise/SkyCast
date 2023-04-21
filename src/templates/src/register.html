@@ -2,12 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login | GeoStation</title>
+	<title>Register | GeoStation</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-9XZlBtV0zgI0W8VvTfNinN7VYRXQEHiCOp8rjKX9Rd7VrTOcNVYYbh8i0QK1C3FsYfWo3MlCgsrKjJGuUSLo1g==" crossorigin="anonymous" />
 </head>
 <body>
   <div class="login-box">
+    {% if messages %}
+      <div class="alert alert-danger" role="alert" style="display: inline-block;">
+          {% for message in messages %}
+              {{ message }}
+          {% endfor %}
+      </div>
+  {% endif %}
       <h1>Sign up to GeoStation</h1>
       <form method="post">
         {% csrf_token %}

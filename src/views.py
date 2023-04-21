@@ -21,10 +21,10 @@ server = settings.MAILCHIMP_DATA_CENTER
 list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 
 # Create your views here.
-
+@login_required(login_url="login")
 def allCities(request):
     context={
-        'cities':City.objects.all()
+        'cities':City.objects.filter()
     }
     return render(request, 'src/results.html',context)
 
@@ -91,6 +91,7 @@ def pageNotFound(request):
 
 
 def registerPage(request):
+    # if the form was sumitted, get the user's input data
     if request.method == 'POST':        
         email = request.POST.get('email')
         username = request.POST.get('username')
@@ -98,20 +99,11 @@ def registerPage(request):
         last_name = request.POST.get('last_name')
         password = request.POST.get('password')
         password1 = request.POST.get('password1')
-        user = authenticate(username=username, password=password)
-
         if password == password1:
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-                first_name=first_name,
-                last_name=last_name,
-            )
-            return redirect('home')
+            user, created = User.objects.get_or_create(username=username, email=email, first_name=first_name, last_name=last_name, password=password)
         else:
             error_msg = 'Passwords do not match'
-      
+            return redirect('register')      
         try:
             # Initialize the Mailchimp SDK
             client = MailchimpMarketing.Client()
@@ -134,17 +126,19 @@ def registerPage(request):
             print(response)
 
                  # If the subscriber was added successfully, log the user in and redirect to the home page
-            if user is not None:
+            if created:
                 auth_login(request, user)
                 return redirect('home')
+            else:
+                messages.error(request, 'Username already exists')
+                return redirect('register')
 
         except Exception as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
-                User.objects.get(username=request.user.username).delete()
-    else:
-        form = CustomUserCreationForm()
-    return render(request,'src/register.html', {'form':form})
+                messages.error(request,'Error contacting mailchimp')
+                # if the user mail isn't authenticated, delete from database
+    return render(request,'src/register.html')
 
 
 def loginPage(request):

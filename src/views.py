@@ -66,13 +66,10 @@ def city_search(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
     city_weather = requests.get(url.format(city)).json()
-    # else:
-    #     return redirect('search')
     
     if city_weather['cod'] == '404':  # conditional when the city queried was found
         return redirect('404')
         
-       
     if city is not None:
          if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
             City.objects.get_or_create(  
@@ -134,7 +131,8 @@ def registerPage(request):
         except Exception as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
-                messages.error(request,'Error contacting mailchimp')
+                messages.error(request,'Sorry. This site is experiencing technical difficulties. Please try again later.')
+                User.objects.filter(username=username).delete()
                 # if the user mail isn't authenticated, delete from database
     return render(request,'src/register.html')
 

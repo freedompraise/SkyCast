@@ -61,7 +61,8 @@
 
 
                       <div class="mr-5">
-                        <h5>Cities Queried <a href="{% url 'cities' %}">...</a> </h5> 
+                        <a class="white-text" href="{% url 'cities' %}">
+                        <h5>Cities Queried ...</a> </h5> 
                         {% for city in cities %}
                           <p class="light-text suggestion">{{city}}</p>
                         {% endfor %}

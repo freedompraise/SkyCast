@@ -87,6 +87,7 @@ MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = config('MAILCHIMP_DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = config('MAILCHIMP_EMAIL_LIST_ID')
 SECRET_KEY = config('SECRET_KEY')
+OPEN_WEATHER_API_KEY = config('OPEN_WEATHER_API_KEY')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

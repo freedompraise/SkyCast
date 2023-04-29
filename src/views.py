@@ -19,6 +19,7 @@ import mailchimp_marketing as MailchimpMarketing
 api_key = settings.MAILCHIMP_API_KEY
 server = settings.MAILCHIMP_DATA_CENTER
 list_id = settings.MAILCHIMP_EMAIL_LIST_ID
+url = settings.OPEN_WEATHER_API_KEY
 
 # Create your views here.
 @login_required(login_url="login")
@@ -30,7 +31,6 @@ def allCities(request):
 
 
 def base(request):
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
     city_weather = requests.get(url.format(city)).json()
     

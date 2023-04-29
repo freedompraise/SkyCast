@@ -63,7 +63,6 @@ def base(request):
 
 @login_required(login_url='login')
 def city_search(request):
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
     city_weather = requests.get(url.format(city)).json()
     

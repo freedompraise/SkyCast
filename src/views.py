@@ -24,18 +24,15 @@ list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 @login_required(login_url="login")
 def allCities(request):
     context={
-        'cities':City.objects.filter()
+        'cities':City.objects.filter(user = request.user).order_by('-time')[:4],
     }
     return render(request, 'src/results.html',context)
 
 
 def base(request):
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
-    #if request.method == 'POST':
     city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
     city_weather = requests.get(url.format(city)).json()
-    # else:
-    #     return redirect('search')
     
     if city_weather['cod'] == '404':  # conditional when the city queried was found
         return redirect('404')
@@ -50,11 +47,11 @@ def base(request):
             max = 5/9*(city_weather['main']['temp_max']-32),
             min = 5/9*(city_weather['main']['temp_min']-32),
          )
-    
+    cities = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
 
     context = {
         'city':City.objects.get(name=city.lower() if city is not None else ''), 
-        'cities':City.objects.order_by('-time')[:4], # gets the latest three citiess
+        'cities':cities, 
         'description':city_weather['weather'][0]['description'],
         'humidity': city_weather['main']['humidity'],
         'feels_like': str(5/9*(city_weather['main']['feels_like']-32))[:4],
@@ -66,6 +63,7 @@ def base(request):
 
 @login_required(login_url='login')
 def city_search(request):
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=816582def5ad0a83096393ac18cf1419'
     city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
     city_weather = requests.get(url.format(city)).json()
     # else:

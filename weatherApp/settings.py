@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import dj_database_url
 
 DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-
+SECRET_KEY = os.getenv('SECRET_KEY')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 APPEND_SLASH=False
@@ -122,4 +122,3 @@ SECURE_HSTS_PRELOAD = True
 # set SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE to True to use secure-only cookies
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECRET_KEY = get_random_secret_key()

@@ -4,8 +4,7 @@ import os
 from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# SECURITY WARNING: don't run with debug turned on in production!
+import dj_database_url
 
 DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
 

@@ -38,7 +38,7 @@ def base(request):
     cities = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
 
     context = {
-        'city':City.objects.get(name=city.lower() if city is not None else ''), 
+        'city':city, 
         'cities':cities, 
         'description':city_weather['weather'][0]['description'],
         'humidity': city_weather['main']['humidity'],

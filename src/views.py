@@ -119,7 +119,7 @@ def registerPage(request):
         except Exception as e:
                 # Handle any API errors
                 print("Error: {}".format(e))
-                messages.error(request,'Sorry. This site is experiencing technical difficulties. Please try again later.')
+                messages.error(request,'Please enter a valid mail')
                 User.objects.filter(username=username).delete()
                 # if the user mail isn't authenticated, delete from database
     return render(request,'src/register.html')

@@ -20,6 +20,7 @@ api_key = settings.MAILCHIMP_API_KEY
 server = settings.MAILCHIMP_DATA_CENTER
 list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 url = settings.OPEN_WEATHER_API_KEY
+DEFAULT_CITY = 'Lagos' #make Lagos the default city
 
 # Create your views here.
 @login_required(login_url="login")
@@ -31,11 +32,8 @@ def allCities(request):
 
 
 def base(request):
-    city = request.POST.get('city') if request.POST.get('city') else 'Lagos' #make Lagos the default city
+    city = request.session.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
-    
-    if city_weather['cod'] == '404':  # conditional when the city queried was found
-        return redirect('404')
         
     cities = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
 
@@ -53,7 +51,7 @@ def base(request):
 
 @login_required(login_url='login')
 def city_search(request):
-    city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
+    city = request.POST.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
     
     if city_weather['cod'] == '404':  # conditional when the city queried was found
@@ -68,6 +66,7 @@ def city_search(request):
             max = 5/9*(city_weather['main']['temp_max']-32),
             min = 5/9*(city_weather['main']['temp_min']-32),
          )
+         request.session['city'] = city
     return redirect('home')    
 
 def pageNotFound(request):

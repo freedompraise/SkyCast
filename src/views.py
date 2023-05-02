@@ -31,7 +31,7 @@ def allCities(request):
 
 
 def base(request):
-    city = request.POST.get('city') if request.POST.get('city') else 'Lagos'
+    city = request.POST.get('city') if request.POST.get('city') else 'Lagos' #make Lagos the default city
     city_weather = requests.get(url.format(city)).json()
     
     if city_weather['cod'] == '404':  # conditional when the city queried was found
@@ -40,7 +40,7 @@ def base(request):
     cities = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
 
     context = {
-        'city':city, 
+        'city':City.objects.get(name=city.lower() if city is not None else ''), 
         'cities':cities, 
         'description':city_weather['weather'][0]['description'],
         'humidity': city_weather['main']['humidity'],

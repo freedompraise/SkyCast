@@ -44,6 +44,9 @@ def base(request):
         'humidity': city_weather['main']['humidity'],
         'feels_like': str(5/9*(city_weather['main']['feels_like']-32))[:4],
         'now':datetime.now().strftime("%c"),
+        'temp': 5/9* (city_weather['main']['temp']-32),
+        'max' : 5/9*(city_weather['main']['temp_max']-32),
+        'min' : 5/9*(city_weather['main']['temp_min']-32),
         'user':request.user
     }
 

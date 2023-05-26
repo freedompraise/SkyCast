@@ -1,4 +1,5 @@
 .env
 db.sqlite3
+weatherApp/__pycache__
+venv
 weatherApp/settings.py
-weatherApp/__pycache__/

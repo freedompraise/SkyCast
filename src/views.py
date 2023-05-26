@@ -20,10 +20,10 @@ api_key = settings.MAILCHIMP_API_KEY
 server = settings.MAILCHIMP_DATA_CENTER
 list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 url = settings.OPEN_WEATHER_API_KEY
-DEFAULT_CITY = 'Lagos' #make Lagos the default city
+DEFAULT_CITY = 'Lagos' # default city to be displayed on the home page
 
 def create_city(city):
-     if city is not None:
+    if city is not None:
          if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
             City.objects.get_or_create(  
             user = request.user,    
@@ -34,7 +34,6 @@ def create_city(city):
          )
 
 
-# Create your views here.
 @login_required(login_url="login")
 def allCities(request):
     context={
@@ -42,23 +41,22 @@ def allCities(request):
     }
     return render(request, 'src/results.html',context)
 
-
 def base(request):
     city = request.session.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
         
-    cities = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
-
+    cities_queried = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
     context = {
-        'city': city,
-        'cities':cities, 
+        'city':city, 
+        'cities':cities_queried, 
         'description':city_weather['weather'][0]['description'],
         'humidity': city_weather['main']['humidity'],
         'temp': str(5/9*(city_weather['main']['temp']-32))[:4],
         'feels_like': str(5/9*(city_weather['main']['feels_like']-32))[:4],
         'now':datetime.now().strftime("%c"),
-        'max':str(5/9*(city_weather['main']['temp_max']-32))[:4],
-        'min':str(5/9*(city_weather['main']['temp_min']-32))[:4],
+        'temp': str(5/9*(city_weather['main']['temp']-32))[:4],
+        'max': str(5/9*(city_weather['main']['temp_max']-32))[:4],
+        'min': str(5/9*(city_weather['main']['temp_min']-32))[:4],
         'user':request.user
     }
 
@@ -69,10 +67,9 @@ def city_search(request):
     city_weather = requests.get(url.format(city)).json()
     
     if city_weather['cod'] == '404':  # conditional when the city queried was found
-        return redirect('404')
-    
+        return redirect('404')    
     request.session['city'] = city
-        
+
     return redirect('home')    
 
 def pageNotFound(request):
@@ -128,6 +125,7 @@ def registerPage(request):
                 # Handle any API errors
                 print("Error: {}".format(e))
                 messages.error(request,'Sorry. This site is experiencing technical difficulties. Please try again later.')
+                User.objects.filter(username=username).delete()
                 # if the user mail isn't authenticated, delete from database
                 User.objects.filter(username=username).delete()
                 

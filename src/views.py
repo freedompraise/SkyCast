@@ -62,7 +62,7 @@ def base(request):
         'user':request.user
     }
 
-    return render(request,'src/home-view.html',context)
+    return render(request,'src/base.html',context)
 
 def city_search(request):
     city = request.POST.get('city', DEFAULT_CITY)

@@ -15,12 +15,12 @@ from datetime import datetime, date
 # mailchimp
 import mailchimp_marketing as MailchimpMarketing
 
-
 api_key = settings.MAILCHIMP_API_KEY
 server = settings.MAILCHIMP_DATA_CENTER
 list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 url = settings.OPEN_WEATHER_API_KEY
 DEFAULT_CITY = 'Lagos' # default city to be displayed on the home page
+
 
 def add_city_to_db(city):
     if city is not None:
@@ -32,7 +32,8 @@ def add_city_to_db(city):
             max = 5/9*(city_weather['main']['temp_max']-32),
             min = 5/9*(city_weather['main']['temp_min']-32),
             )
-    
+
+
 def add_city_to_sessions(city):
     if city:
         if 'queried_cities' not in request.session:
@@ -40,7 +41,6 @@ def add_city_to_sessions(city):
             queried_cities = request.session['queried_cities']
             queried_cities.append(city)
             request.session.modified = True  # Save the session after modifying it
-
 
 
 @login_required(login_url="login")
@@ -52,6 +52,7 @@ def query_all_cities(request):
             'cities':queried_cities,
         }
     return render(request, 'src/results.html',context)
+
 
 def base(request):
     city = request.session.get('city', DEFAULT_CITY)
@@ -74,6 +75,7 @@ def base(request):
 
     return render(request,'src/base.html',context)
 
+
 def search_city(request):
     city = request.POST.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
@@ -83,6 +85,7 @@ def search_city(request):
     request.session['city'] = city
 
     return redirect('home')    
+
 
 def pageNotFound(request):
     return render(request,'src/404.html') 

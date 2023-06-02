@@ -22,7 +22,7 @@ list_id = settings.MAILCHIMP_EMAIL_LIST_ID
 url = settings.OPEN_WEATHER_API_KEY
 DEFAULT_CITY = 'Lagos' # default city to be displayed on the home page
 
-def create_city(city):
+def add_city_to_db(city):
     if city is not None:
         if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
             City.objects.get_or_create(  

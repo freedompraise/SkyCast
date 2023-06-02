@@ -34,7 +34,7 @@ def add_city_to_db(city):
             )
 
 
-def add_city_to_sessions(city):
+def add_city_to_sessions(request,city):
     if city:
         if 'queried_cities' not in request.session:
             request.session['queried_cities'] = []  # Initialize an empty list if it doesn't exist yet
@@ -79,9 +79,11 @@ def base(request):
 def search_city(request):
     city = request.POST.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
-    
     if city_weather['cod'] == '404':  # conditional when the city queried was found
         return redirect('404')    
+    add_city_to_db(city)
+    add_city_to_sessions(request,city)
+
     request.session['city'] = city
 
     return redirect('home')    

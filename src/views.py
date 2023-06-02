@@ -36,11 +36,9 @@ def add_city_to_db(city):
 
 def add_city_to_sessions(request,city):
     if city:
-        if 'queried_cities' not in request.session:
-            request.session['queried_cities'] = []  # Initialize an empty list if it doesn't exist yet
-            queried_cities = request.session['queried_cities']
-            queried_cities.append(city)
-            request.session.modified = True  # Save the session after modifying it
+        queried_cities = set(request.session.get('queried_cities', []))  # Retrieve the list from the session
+        queried_cities.add(city)
+        request.session['queried_cities'] = list(queried_cities)  # Update the list in the session # Save the session after modifying it
 
 
 @login_required(login_url="login")
@@ -57,7 +55,7 @@ def query_all_cities(request):
 def base(request):
     city = request.session.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
-    queried_cities = City.objects.filter(user = request.user).order_by('-time')[:4] if request.user.is_authenticated else request.session.get('queried_cities', [])
+    queried_cities = City.objects.filter(user = request.user).order_by('-time')[:4] if request.user.is_authenticated else set(request.session.get('queried_cities', []))
     context = {
 
         'city':city, 
@@ -81,9 +79,9 @@ def search_city(request):
     city_weather = requests.get(url.format(city)).json()
     if city_weather['cod'] == '404':  # conditional when the city queried was found
         return redirect('404')    
-    add_city_to_db(city)
+    if request.user.is_authenticated:
+        add_city_to_db(city)
     add_city_to_sessions(request,city)
-
     request.session['city'] = city
 
     return redirect('home')    

@@ -44,13 +44,10 @@ def add_city_to_sessions(city):
 
 
 @login_required(login_url="login")
-def all_cities(request):
-    if request.user.is_authenticated:
-        queried_cities = City.objects.filter(user = request.user).order_by('-time')[:4]
-        
-    else:
-        queried_cities = request.session.get('queried_cities', [])
-    
+def query_all_cities(request):
+    # to query all cities in the database
+    queried_cities = City.objects.filter(user = request.user).order_by('-time')
+
     context = {
             'cities':queried_cities,
         }
@@ -59,11 +56,11 @@ def all_cities(request):
 def base(request):
     city = request.session.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
-        
-    cities_queried = City.objects.filter(user=request.user).order_by('-time')[:4] if request.user.is_authenticated else None # gets the latest three cities if the user is authenticated
+    queried_cities = City.objects.filter(user = request.user).order_by('-time')[:4] if request.user.is_authenticated else request.session.get('queried_cities', [])
     context = {
+
         'city':city, 
-        'cities':cities_queried, 
+        'cities':queried_cities, 
         'description':city_weather['weather'][0]['description'],
         'humidity': city_weather['main']['humidity'],
         'temp': str(5/9*(city_weather['main']['temp']-32))[:4],

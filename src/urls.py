@@ -6,6 +6,6 @@ urlpatterns = [
     path('search/',views.city_search,name='search'),
     path('auth/',views.loginPage, name='login'),
     path('404/',views.pageNotFound, name = "404"),
-    path('results/', views.all_cities, name = "cities"),
+    path('results/', views.query_all_cities, name = "cities"),
     path('auth/register/', views.registerPage, name = 'register' ),
 ]

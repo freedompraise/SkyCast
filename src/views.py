@@ -49,6 +49,7 @@ def query_all_cities(request):
     context = {
             'cities':queried_cities,
         }
+
     return render(request, 'src/results.html',context)
 
 
@@ -56,6 +57,7 @@ def base(request):
     city = request.session.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
     queried_cities = City.objects.filter(user = request.user).order_by('-time')[:4] if request.user.is_authenticated else set(request.session.get('queried_cities', []))
+
     context = {
 
         'city':city, 
@@ -88,6 +90,7 @@ def search_city(request):
 
 
 def pageNotFound(request):
+
     return render(request,'src/404.html') 
 
 
@@ -158,6 +161,7 @@ def loginPage(request):
             return redirect('home')
         else:
             error_message = 'Invalid username or password.'
+            
     return render(request, 'src/login.html', {'error_message': error_message})
 
  

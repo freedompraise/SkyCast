@@ -22,9 +22,10 @@ url = settings.OPEN_WEATHER_API_KEY
 DEFAULT_CITY = 'Lagos' # default city to be displayed on the home page
 
 
-def add_city_to_db(city):
+def add_city_to_db(request,city):
     if city is not None:
         if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
+            city_weather = requests.get(url.format(city)).json()
             City.objects.get_or_create(  
             user = request.user,    
             name = city.lower(),
@@ -82,7 +83,7 @@ def search_city(request):
     if city_weather['cod'] == '404':  # conditional when the city queried was found
         return redirect('404')    
     if request.user.is_authenticated:
-        add_city_to_db(city)
+        add_city_to_db(request,city)
     add_city_to_sessions(request,city)
     request.session['city'] = city
 
@@ -161,7 +162,7 @@ def loginPage(request):
             return redirect('home')
         else:
             error_message = 'Invalid username or password.'
-            
+
     return render(request, 'src/login.html', {'error_message': error_message})
 
  

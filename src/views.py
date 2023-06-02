@@ -45,9 +45,15 @@ def add_city_to_sessions(city):
 
 @login_required(login_url="login")
 def all_cities(request):
-    context={
-        'cities':City.objects.filter(user = request.user).order_by('-time')[:4],
-    }
+    if request.user.is_authenticated:
+        queried_cities = City.objects.filter(user = request.user).order_by('-time')[:4]
+        
+    else:
+        queried_cities = request.session.get('queried_cities', [])
+    
+    context = {
+            'cities':queried_cities,
+        }
     return render(request, 'src/results.html',context)
 
 def base(request):

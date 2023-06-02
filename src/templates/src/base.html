@@ -65,7 +65,9 @@
                         <h5>Cities Queried ...</a> </h5> 
                         {% for city in cities %}
                           <p class="light-text suggestion">{{city}}</p>
-                        {% endfor %}
+                          {% empty %}
+                          <p class="light-text suggestion">No cities queried yet</p>
+                          {% endfor %}
                           <div class="line my-5"></div>
       
                           <strong>Weather Details</strong>

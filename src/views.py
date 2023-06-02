@@ -23,21 +23,20 @@ url = settings.OPEN_WEATHER_API_KEY
 DEFAULT_CITY = 'Lagos' # default city to be displayed on the home page
 
 def create_city(city):
-    # add the city to the database is user is logged in
-    if request.user.is_authenticated:
-        if city is not None:
-             if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
-                City.objects.get_or_create(  
-                user = request.user,    
-                name = city.lower(),
-                temp= 5/9* (city_weather['main']['temp']-32),
-                max = 5/9*(city_weather['main']['temp_max']-32),
-                min = 5/9*(city_weather['main']['temp_min']-32),
+    if city is not None:
+        if City.objects.filter(name = city.lower()).exists() == False :   #to avoid adding a city twice to the database
+            City.objects.get_or_create(  
+            user = request.user,    
+            name = city.lower(),
+            temp= 5/9* (city_weather['main']['temp']-32),
+            max = 5/9*(city_weather['main']['temp_max']-32),
+            min = 5/9*(city_weather['main']['temp_min']-32),
             )
-    else:
-        if city:
-            if 'queried_cities' not in request.session:
-                request.session['queried_cities'] = []  # Initialize an empty list if it doesn't exist yet
+    
+def add_city_to_sessions(city):
+    if city:
+        if 'queried_cities' not in request.session:
+            request.session['queried_cities'] = []  # Initialize an empty list if it doesn't exist yet
             queried_cities = request.session['queried_cities']
             queried_cities.append(city)
             request.session.modified = True  # Save the session after modifying it

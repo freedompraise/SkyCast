@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('',views.base,name='home'),
-    path('search/',views.city_search,name='search'),
+    path('search/',views.search_city,name='search'),
     path('auth/',views.loginPage, name='login'),
     path('404/',views.pageNotFound, name = "404"),
     path('results/', views.query_all_cities, name = "cities"),

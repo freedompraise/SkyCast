@@ -74,7 +74,7 @@ def base(request):
 
     return render(request,'src/base.html',context)
 
-def city_search(request):
+def search_city(request):
     city = request.POST.get('city', DEFAULT_CITY)
     city_weather = requests.get(url.format(city)).json()
     

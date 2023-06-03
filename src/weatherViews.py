@@ -9,4 +9,3 @@ class ClimateChangeView(ListView):
   def get_queryset(self):
     city_id = self.kwargs.get('city_id')
     return ClimateChange.objects.filter(city_id=city_id)
-

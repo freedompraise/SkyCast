@@ -8,6 +8,7 @@ This is a Django web application that allows users to compare weather informatio
 - Compare current weather data for multiple cities
 - View historic weather data for each city
 - Sign up to receive daily weather updates by email
+- Sleek and Responsive design
 - Save a log of previously queried cities
 - Data sourced from OpenWeatherMap API
 - Dark Mode Options

@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'password1', 'password2')
 
-class ClimateChangeForm(forms.ModelForm):
-  class Meta:
-    model = ClimateChange
-    fields = ['date', 'temperature', 'precipitation']
+# class ClimateChangeForm(forms.ModelForm):
+#   class Meta:
+#     model = ClimateChange
+#     fields = ['date', 'temperature', 'precipitation']

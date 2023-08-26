@@ -9,5 +9,5 @@ urlpatterns = [
     path('404/',views.pageNotFound, name = "404"),
     path('results/', views.query_all_cities, name = "cities"),
     path('auth/register/', views.registerPage, name = 'register' ),
-    path('city/<int:city_id>/climate-change/', weatherViews.ClimateChangeView(), name = 'climate_change'),
+    # path('city/<int:city_id>/climate-change/', weatherViews.ClimateChangeView(), name = 'climate_change'),
 ]

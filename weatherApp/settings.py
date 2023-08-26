@@ -1,14 +1,23 @@
 
 from pathlib import Path
 import os
-from decouple import config
+from dotenv import load_dotenv
+import dj_database_url
+import mimetypes
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+mimetypes.add_type("text/css", ".css", True)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
+
+APPEND_SLASH=False
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+
+load_dotenv(BASE_DIR / '.env')
 
 
 # Application definition
@@ -31,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'weatherApp.urls'
@@ -38,7 +48,7 @@ ROOT_URLCONF = 'weatherApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/"src/templates/src/templates"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,17 +61,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'weatherApp.wsgi.application'
 
+WSGI_APPLICATION = 'weatherApp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
 
 
@@ -86,7 +93,6 @@ SESSION_COOKIE_AGE = 1800 # user session time of 30 mins
 MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = config('MAILCHIMP_DATA_CENTER')
 MAILCHIMP_EMAIL_LIST_ID = config('MAILCHIMP_EMAIL_LIST_ID')
-SECRET_KEY = config('SECRET_KEY')
 OPEN_WEATHER_API_KEY = config('OPEN_WEATHER_API_KEY')
 
 # Internationalization
@@ -106,11 +112,35 @@ USE_TZ = True
 
 # define the location of your static files
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/images/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'images')
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static'
 ]
+
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SECURE_HSTS_SECONDS = 315300 # or any value that you prefer
+
+# set SECURE_SSL_REDIRECT to True to enforce SSL connection
+SECURE_SSL_REDIRECT = True
+
+# set SECURE_HSTS_INCLUDE_SUBDOMAINS to True if all subdomains should be served via SSL
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# set SECURE_HSTS_PRELOAD to True to submit your site to the browser preload list
+SECURE_HSTS_PRELOAD = True
+
+# set SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE to True to use secure-only cookies
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True

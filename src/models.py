@@ -17,3 +17,9 @@ class City(models.Model):
 
     def __str__(self):
         return self.name
+
+class ClimateChange(models.Model):
+  city = models.ForeignKey(City, on_delete=models.CASCADE)
+  time = models.DateField()
+  temp = models.FloatField()
+  # add more fields as needed

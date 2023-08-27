@@ -67,10 +67,19 @@ WSGI_APPLICATION = 'weatherApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
+
+
+if DEBUG==1:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+else:
+    DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -90,10 +99,10 @@ AUTH_PASSWORD_VALIDATORS = [
 SESSION_COOKIE_AGE = 1800 # user session time of 30 mins
 
 
-MAILCHIMP_API_KEY = config('MAILCHIMP_API_KEY')
-MAILCHIMP_DATA_CENTER = config('MAILCHIMP_DATA_CENTER')
-MAILCHIMP_EMAIL_LIST_ID = config('MAILCHIMP_EMAIL_LIST_ID')
-OPEN_WEATHER_API_KEY = config('OPEN_WEATHER_API_KEY')
+MAILCHIMP_API_KEY = os.getenv('MAILCHIMP_API_KEY')
+MAILCHIMP_DATA_CENTER = os.getenv('MAILCHIMP_DATA_CENTER')
+MAILCHIMP_EMAIL_LIST_ID = os.getenv('MAILCHIMP_EMAIL_LIST_ID')
+OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

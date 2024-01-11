@@ -9,8 +9,6 @@ mimetypes.add_type("text/css", ".css", True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = os.getenv("DEBUG", "0").lower() in ["true", "t", "1"]
-
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(" ")
 
 APPEND_SLASH = False
@@ -68,7 +66,7 @@ WSGI_APPLICATION = "weatherApp.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-if DEBUG == 1:
+if str(os.environ.get("DEBUG")).lower() == "true":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",

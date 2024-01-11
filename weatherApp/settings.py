@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import dj_database_url
 import mimetypes
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 mimetypes.add_type("text/css", ".css", True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -115,10 +114,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-# define the location of your static files
 STATIC_URL = "/static/"
 
 MEDIA_URL = "/images/"
@@ -131,22 +126,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-SECURE_HSTS_SECONDS = 114000  # or any value that you prefer
+SECURE_HSTS_SECONDS = 114000  # 1 day
 
-# set SECURE_SSL_REDIRECT to True to enforce SSL connection
 SECURE_SSL_REDIRECT = True
 
-# set SECURE_HSTS_INCLUDE_SUBDOMAINS to True if all subdomains should be served via SSL
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# set SECURE_HSTS_PRELOAD to True to submit your site to the browser preload list
 SECURE_HSTS_PRELOAD = True
 
-# set SESSION_COOKIE_SECURE and CSRF_COOKIE_SECURE to True to use secure-only cookies
 SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True

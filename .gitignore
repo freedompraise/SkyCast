@@ -4,3 +4,4 @@ weatherApp/__pycache__
 venv
 weatherApp/settings.py
 weatherApp/src/__pycache__/
+src/__pycache__/

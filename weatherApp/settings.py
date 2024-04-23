@@ -16,9 +16,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 load_dotenv(BASE_DIR / ".env")
 
-
-# Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -58,11 +55,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = "weatherApp.wsgi.application"
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
 if str(os.environ.get("DEBUG")).lower() == "true":
@@ -102,8 +95,6 @@ MAILCHIMP_DATA_CENTER = os.getenv("MAILCHIMP_DATA_CENTER")
 MAILCHIMP_EMAIL_LIST_ID = os.getenv("MAILCHIMP_EMAIL_LIST_ID")
 OPEN_WEATHER_API_KEY = os.getenv("OPEN_WEATHER_API_KEY")
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -113,28 +104,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = "/static/"
 
-MEDIA_URL = "/images/"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "static", "images")
-
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-SECURE_HSTS_SECONDS = 114000  # 1 day
-
-SECURE_SSL_REDIRECT = True
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-SECURE_HSTS_PRELOAD = True
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 114000
+SECURE_SSL_REDIRECT = False
+SESSION_ENGINE = "django.contrib.sessions.backends.db"

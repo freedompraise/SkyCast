@@ -1,110 +1,114 @@
 body {
-    color: #fff;
-    overflow-x: hidden;
-    height: 100%;
-    background-image: linear-gradient(#5090ad, #9dc9ee);
-    background-repeat: no-repeat;
+  color: #fff;
+  overflow-x: hidden;
+  height: 100%;
+  background-image: linear-gradient(#5090ad, #9dc9ee);
+  background-repeat: no-repeat;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #000 !important;
 }
 
 .card0 {
-    width: 94%;
+  width: 94%;
 }
 
 .card1 {
-    background-image: linear-gradient(#156fb9, #0e99da);
-    padding: 30px 20px 30px 50px;
+  background-image: linear-gradient(#156fb9, #0e99da);
+  padding: 30px 20px 30px 50px;
 }
 
 .image {
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  height: 300px;
 }
 
 .large-font {
-    font-size: 70px;
-    font-family: Arial;
+  font-size: 70px;
+  font-family: Arial;
 }
 
 .dark-mode-switch {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-    font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 .fa-moon {
-    color: #fff;
+  color: #fff;
 }
 
 .card2 {
-    background-color: #24749c;
-    padding: 0px 0px 40px 40px;
+  background-color: #24749c;
+  padding: 0px 0px 40px 40px;
 }
 
 input {
-    background-color: #f8f8f8;
-    padding: 24px 0px 12px 0px !important;
-    width: 80%;
-    box-sizing: border-box;
-    border: none !important;
-    border-bottom: 1px solid #ecf1f3 !important;
-    font-size: 16px !important;
-    color: #161515 !important;
+  background-color: #f8f8f8;
+  padding: 24px 0px 12px 0px !important;
+  width: 80%;
+  box-sizing: border-box;
+  border: none !important;
+  border-bottom: 1px solid #ecf1f3 !important;
+  font-size: 16px !important;
+  color: #161515 !important;
 }
 
 input:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border-bottom: 1px solid #fff !important;
-    outline-width: 0;
-    font-weight: 400;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #fff !important;
+  outline-width: 0;
+  font-weight: 400;
 }
 
 ::placeholder {
-    color: #131414 !important;
-    opacity: 1;
+  color: #131414 !important;
+  opacity: 1;
 }
 
 :-ms-input-placeholder {
-    color: #B0BEC5 !important;
+  color: #b0bec5 !important;
 }
 
 ::-ms-input-placeholder {
-    color: #B0BEC5 !important;
+  color: #b0bec5 !important;
 }
 
 .fa-search {
-    color: #2a6886;
-    background-color: #24749c;
-    font-size: 20px;
-    padding: 20px;
-    width: 20%;
-    cursor: pointer;
+  color: #2a6886;
+  background-color: #24749c;
+  font-size: 20px;
+  padding: 20px;
+  width: 20%;
+  cursor: pointer;
 }
 
 .light-text {
-    color: #B0BEC5;
+  color: #b0bec5;
 }
 
 .suggestion:hover {
-    color: #fff;
-    cursor: pointer;
+  color: #fff;
+  cursor: pointer;
 }
 
 .line {
-    height: 1px;
-    background-color: #128bc7;
+  height: 1px;
+  background-color: #128bc7;
 }
 
 .white-text {
-    color: white;
-  }
-  
+  color: white;
+}
 
 @media screen and (max-width: 500px) {
-    .card1 {
-        padding-left: 26px;
-    }
+  .card1 {
+    padding-left: 26px;
+  }
 }

@@ -30,30 +30,37 @@ def record_city_interest(request, city):
     stores it in the session, and retrieves weather data for it."""
 
     if city:
+        city_weather = requests.get(url.format(city)).json()
+        city_data = {
+            "name": city.lower(),
+            "temp": 5 / 9 * (city_weather["main"]["temp"] - 32),
+            "time": datetime.now().strftime("%c"),
+        }
+
         if (
             request.user.is_authenticated
             and not City.objects.filter(name=city.lower()).exists()
         ):
-            city_weather = requests.get(url.format(city)).json()
             City.objects.create(
                 user=request.user,
-                name=city.lower(),
-                temp=5 / 9 * (city_weather["main"]["temp"] - 32),
+                name=city_data["name"],
+                temp=city_data["temp"],
                 max=5 / 9 * (city_weather["main"]["temp_max"] - 32),
                 min=5 / 9 * (city_weather["main"]["temp_min"] - 32),
             )
 
         # Store city in session (for all users)
-        queried_cities = set(request.session.get("queried_cities", []))
-        queried_cities.add(city)
-        request.session["queried_cities"] = list(queried_cities)
+        queried_cities = request.session.get("queried_cities", [])
+        queried_cities.append(city_data)
+        request.session["queried_cities"] = queried_cities
 
 
 def query_all_cities(request):
+    user = request.user
     if user.is_authenticated:
         queried_cities = City.objects.filter(user=request.user).order_by("-time")
     else:
-        queried_cities = set(request.session.get("queried_cities", []))
+        queried_cities = request.session.get("queried_cities", [])
     context = {
         "cities": queried_cities,
     }
@@ -66,7 +73,7 @@ def base(request):
     queried_cities = (
         City.objects.filter(user=request.user).order_by("-time")[:4]
         if request.user.is_authenticated
-        else set(request.session.get("queried_cities", []))
+        else request.session.get("queried_cities", [])
     )
 
     context = {
@@ -77,7 +84,6 @@ def base(request):
         "temp": str(5 / 9 * (city_weather["main"]["temp"] - 32))[:4],
         "feels_like": str(5 / 9 * (city_weather["main"]["feels_like"] - 32))[:4],
         "now": datetime.now().strftime("%c"),
-        "temp": str(5 / 9 * (city_weather["main"]["temp"] - 32))[:4],
         "max": str(5 / 9 * (city_weather["main"]["temp_max"] - 32))[:4],
         "min": str(5 / 9 * (city_weather["main"]["temp_min"] - 32))[:4],
         "user": request.user,

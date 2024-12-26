@@ -1,28 +1,36 @@
 {% load static %}
 
- <head>
- <link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}" />
- </head>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- results.html -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App - Results</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
 
+<body>
+  <div class="container">
+    <h1>Cities Queried</h1>
 
-  <h1>Cities Queried</h1>
-
-  {% if cities %}
-    <ul>
+    {% if cities %}
+    <ul class="city-list">
       {% for city in cities %}
-        <li>
-          <strong><a href = "https://en.wikipedia.org/wiki/{{city}}">{{ city.name }}</a>
-          </strong>
-          <p>Temperature: {{ city.temperature }}°C</p>
-          <p>Time Queried: {{ city.time }}</p>
-        </li>
+      <li class="city-item">
+        <strong><a href="https://en.wikipedia.org/wiki/{{city.name}}">{{ city.name }}</a></strong>
+        <p>Temperature: {{ city.temp | floatformat:1}}°C</p>
+        <p>Time Queried: {{ city.time }}</p>
+      </li>
       {% endfor %}
     </ul>
-  {% else %}
+    {% else %}
     <p>No cities have been queried yet.</p>
-  {% endif %}
+    {% endif %}
 
-  <button type="button" onclick="location.href='/'">Back to Home</button>
+    <button type="button" onclick="location.href='/'">Back to Home</button>
+  </div>
+</body>
 
+</html>

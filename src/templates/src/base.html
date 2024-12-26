@@ -69,7 +69,7 @@
                   <h5>Cities Queried ...
                 </a> </h5>
                 {% for city in cities %}
-                <p class="light-text suggestion">{{city}}</p>
+                <p class="light-text suggestion">{{city.name}}</p>
                 {% empty %}
                 <p class="light-text suggestion">No cities queried yet</p>
                 {% endfor %}

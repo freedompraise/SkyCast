@@ -15,6 +15,7 @@ APPEND_SLASH = False
 DEBUG = str(os.getenv("DEBUG")).lower() == "true"
 
 SECRET_KEY = os.getenv("SECRET_KEY")
+print("The secret key is: ", SECRET_KEY)
 
 load_dotenv(BASE_DIR / ".env")
 

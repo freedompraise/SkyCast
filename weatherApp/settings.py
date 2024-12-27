@@ -6,6 +6,8 @@ import mimetypes
 
 mimetypes.add_type("text/css", ".css", True)
 
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(" ")
@@ -15,9 +17,9 @@ APPEND_SLASH = False
 DEBUG = str(os.getenv("DEBUG")).lower() == "true"
 
 SECRET_KEY = os.getenv("SECRET_KEY")
-print("The secret key is: ", SECRET_KEY)
+if not SECRET_KEY:
+    raise ImproperlyConfigured("The SECRET_KEY setting must not be empty.")
 
-load_dotenv(BASE_DIR / ".env")
 
 INSTALLED_APPS = [
     "django.contrib.admin",

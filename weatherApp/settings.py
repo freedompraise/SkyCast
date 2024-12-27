@@ -72,7 +72,14 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        "default": dj_database_url.parse(os.getenv("DATABASE_URL"), conn_max_age=600),
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": "postgres",
+            "USER": "postgres.hnbzndbikbzwwekjzfiv",
+            "PASSWORD": os.getenv("SUPABASE_PASSWORD"),
+            "HOST": os.getenv("SUPABASE_HOST"),
+            "PORT": "5432",
+        }
     }
 
 AUTH_PASSWORD_VALIDATORS = [

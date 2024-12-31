@@ -69,7 +69,18 @@
                   <h5>Cities Queried ...
                 </a> </h5>
                 {% for city in cities %}
-                <p class="light-text suggestion">{{city.name}}</p>
+
+                <a href="#"
+                  onclick="event.preventDefault(); document.getElementById('search-city-{{ city.name }}').submit();">
+                  <p class="light-text suggestion">
+                    {{ city.name }}
+                  </p>
+                </a>
+
+                <form id="search-city-{{ city.name }}" method="POST" action="{% url 'search' %}" style="display: none;">
+                  {% csrf_token %}
+                  <input type="hidden" name="city" value="{{ city.name }}">
+                </form>
                 {% empty %}
                 <p class="light-text suggestion">No cities queried yet</p>
                 {% endfor %}

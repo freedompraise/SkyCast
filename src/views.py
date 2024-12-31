@@ -32,32 +32,34 @@ def convert_to_celsius(temp):
 
 
 def record_city_interest(request, city):
-    """Handles city selection actions."""
-    if not city:
-        return
+    """Handles city selection actions: adds city to database (if applicable),
+    stores it in the session, and retrieves weather data for it."""
 
-    city_weather = get_city_weather(city)
-    city_data = {
-        "name": city.lower(),
-        "temp": convert_to_celsius(city_weather["main"]["temp"]),
-        "time": datetime.now().strftime("%c"),
-    }
+    if city:
+        city_weather = requests.get(url.format(city)).json()
+        city_data = {
+            "name": city.lower(),
+            "temp": 5 / 9 * (city_weather["main"]["temp"] - 32),
+            "time": datetime.now().strftime("%c"),
+        }
 
-    if (
-        request.user.is_authenticated
-        and not City.objects.filter(name=city.lower()).exists()
-    ):
-        City.objects.create(
-            user=request.user,
-            name=city_data["name"],
-            temp=city_data["temp"],
-            max=convert_to_celsius(city_weather["main"]["temp_max"]),
-            min=convert_to_celsius(city_weather["main"]["temp_min"]),
-        )
+        if (
+            request.user.is_authenticated
+            and not City.objects.filter(name=city.lower()).exists()
+        ):
+            City.objects.create(
+                user=request.user,
+                name=city_data["name"],
+                temp=city_data["temp"],
+                max=5 / 9 * (city_weather["main"]["temp_max"] - 32),
+                min=5 / 9 * (city_weather["main"]["temp_min"] - 32),
+            )
 
-    queried_cities = request.session.get("queried_cities", [])
-    queried_cities.append(city_data)
-    request.session["queried_cities"] = queried_cities
+        # Store city in session (for all users)
+        queried_cities = request.session.get("queried_cities", [])
+        if not any(c["name"] == city_data["name"] for c in queried_cities):
+            queried_cities.append(city_data)
+            request.session["queried_cities"] = queried_cities
 
 
 def query_all_cities(request):

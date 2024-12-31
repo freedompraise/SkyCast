@@ -89,8 +89,9 @@ input:focus {
   cursor: pointer;
 }
 
-.light-text {
-  color: #b0bec5;
+.light-text,
+a {
+  color: #fcfeff !important;
 }
 
 .suggestion:hover {

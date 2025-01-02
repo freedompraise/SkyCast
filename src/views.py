@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 from .forms import CustomUserCreationForm
 from .models import City
@@ -24,6 +25,44 @@ DEFAULT_CITY = "Lagos"
 def get_city_weather(city):
     """Fetches weather data for a given city."""
     return requests.get(url.format(city)).json()
+
+
+def fetch_city_suggestions(request):
+    query = request.GET.get("query", "")
+    if not query:
+        return JsonResponse({"suggestions": []})
+
+    # Get the API key from the environment settings
+    api_key = url.split("=")[-1].strip(' "')
+
+    # Base URL for city suggestions
+    base_url = "https://api.openweathermap.org/geo/1.0/direct"
+    params = {
+        "q": query,
+        "limit": 5,
+        "appid": api_key,  # Add the API key to the parameters
+    }
+
+    try:
+        # Make the request to OpenWeatherMap API
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()  # Raise error for HTTP errors
+        data = response.json()
+
+        # Format suggestions
+        suggestions = [
+            {
+                "name": city.get("name"),
+                "state": city.get("state", ""),
+                "country": city.get("country", ""),
+            }
+            for city in data
+        ]
+        return JsonResponse({"suggestions": suggestions})
+    except requests.exceptions.RequestException as e:
+        # Log the error and return a friendly response
+        print(f"Error fetching city suggestions: {e}")
+        return JsonResponse({"error": "Failed to fetch suggestions"}, status=500)
 
 
 def convert_to_celsius(temp):
